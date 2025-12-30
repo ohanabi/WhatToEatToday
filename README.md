@@ -106,5 +106,6 @@ python draw_recommend_flow.py
 
 输出在 `diagrams/`。
 
-
+## 许可证
+MIT License
 
