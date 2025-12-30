@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "食刻选择 - 随机选择美食"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "食刻选择主应用"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "食刻选择"
+    }
+  ]
+}

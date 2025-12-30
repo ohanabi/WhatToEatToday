@@ -1,0 +1,55 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "material": {
+          "certpath": "C:/Users/neko/.ohos/config/default_WhatToEatToday_YyThP4yg8tGJF6Fc7CKpo8cBrnBFnZ-Xr9aM5wFXtLw=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001BC29E75A1A5DCE56E63F89DF7FEF9722EEABA5F66D5BE982B5F6771798E078B7F3B405AEB49EE69",
+          "profile": "C:/Users/neko/.ohos/config/default_WhatToEatToday_YyThP4yg8tGJF6Fc7CKpo8cBrnBFnZ-Xr9aM5wFXtLw=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:/Users/neko/.ohos/config/default_WhatToEatToday_YyThP4yg8tGJF6Fc7CKpo8cBrnBFnZ-Xr9aM5wFXtLw=.p12",
+          "storePassword": "0000001B6094235F78B75FFF9B2F9690CF67ABCAD27D5C62417B95B38FCD70E070ECEA34EB5B979CB0E859"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "targetSdkVersion": "5.1.1(19)",
+        "compatibleSdkVersion": "5.1.1(19)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}
