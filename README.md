@@ -5,7 +5,6 @@
 > 工程目录名：`WhatToEatToday`  
 > 应用名称：**食刻选择**
 
----
 
 ## 功能特性
 
@@ -39,7 +38,7 @@
   - 基于 Preferences 存储（foods/history/settings/users/login 等）
   - 以用户维度隔离数据（形如 `WhatToEatData_${username}`）
 
----
+
 
 ## 项目结构
 
@@ -58,7 +57,7 @@
 - `entry/src/main/ets/common/`
   - 常量、工具函数（日期/节日/格式化等，依项目实际文件）
 
----
+
 
 ## 推荐算法流程（概览）
 
@@ -69,7 +68,7 @@
 5. 叠加节日加权（若当日命中节日推荐集合）
 6. 加权随机抽样得到推荐结果并写入 `currentSuggestion`
 
----
+
 
 ## 环境要求
 
@@ -77,7 +76,7 @@
 - HarmonyOS SDK（与工程配置匹配）
 - Python（可选：用于生成流程图脚本，如 `diagrams/*.py`）
 
----
+
 
 ## 运行方式（DevEco Studio）
 
@@ -86,9 +85,8 @@
 3. 选择运行设备（模拟器或真机）
 4. 点击 **Run** 启动应用
 
----
 
----
+
 
 ## 流程图
 
@@ -108,7 +106,7 @@ python draw_recommend_flow.py
 
 输出在 `diagrams/`。
 
----
+
 
 
 
