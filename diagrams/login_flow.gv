@@ -1,0 +1,53 @@
+digraph LoginFlow {
+	bgcolor=white fontname="Microsoft YaHei" label="食刻选择｜登录流程图" labelloc=t rankdir=TB
+	node [color="#4C4C4C" fillcolor="#F7F7FB" fontname="Microsoft YaHei" shape=box style="rounded,filled"]
+	edge [arrowsize=0.8 color="#6B6B6B" fontname="Microsoft YaHei"]
+	Start [label="应用启动
+(EntryAbility/Index)"]
+	IndexInit [label="Index.aboutToAppear()
+初始化 UserManager / FoodStore
+写入 AppStorage(context/foodStore)"]
+	CheckLogin [label="UserManager.isLoggedIn() ?"]
+	GoHome [label="进入主页(Index Tab)
+显示推荐/菜品/历史/统计/设置"]
+	GoLogin [label="router.replaceUrl('pages/LoginPage')
+跳转登录页" color="#D98C00" fillcolor="#FFF6E8"]
+	LoginPage [label="LoginPage
+(登录/注册模式切换)" color="#D98C00" fillcolor="#FFF6E8"]
+	DoLogin [label="登录：校验用户名/密码
+(UserManager.login)" color="#D98C00" fillcolor="#FFF6E8"]
+	DoRegister [label="注册：校验长度
+(UserManager.register)
+写入 users_data" color="#D98C00" fillcolor="#FFF6E8"]
+	WriteLoginInfo [label="写入 login_info
+{isLoggedIn:true, currentUser}
+Preferences.flush()" color="#2F6FED" fillcolor="#E8F2FF"]
+	InitUserData [label="FoodStore.init(username)
+加载 foods/history/settings
+或初始化默认数据" color="#2F6FED" fillcolor="#E8F2FF"]
+	BackHome [label="router.replaceUrl('pages/Index')
+回到主页" color="#2F6FED" fillcolor="#E8F2FF"]
+	LoginFail [label="失败：Toast 提示
+(用户名不存在/密码错误)" color="#D92F2F" fillcolor="#FFE8E8"]
+	RegisterOK [label="注册成功：Toast 提示
+可返回登录或直接登录" color="#1E8E3E" fillcolor="#EAF7EA"]
+	RegisterFail [label="注册失败：Toast 提示
+(用户名已存在/格式不合法)" color="#D92F2F" fillcolor="#FFE8E8"]
+	Start -> IndexInit
+	IndexInit -> CheckLogin
+	CheckLogin -> GoHome [label="是"]
+	CheckLogin -> GoLogin [label="否"]
+	GoLogin -> LoginPage
+	LoginPage -> DoLogin [label="点击「登录」"]
+	DoLogin -> WriteLoginInfo [label="校验通过"]
+	DoLogin -> LoginFail [label="校验失败"]
+	LoginFail -> LoginPage [label="继续尝试" style=dashed]
+	WriteLoginInfo -> InitUserData
+	InitUserData -> BackHome
+	BackHome -> GoHome
+	LoginPage -> DoRegister [label="切换到「注册」并提交"]
+	DoRegister -> RegisterOK [label="成功"]
+	DoRegister -> RegisterFail [label="失败"]
+	RegisterFail -> LoginPage [label="修改后重试" style=dashed]
+	RegisterOK -> LoginPage [label="返回登录/自动填充" style=dashed]
+}

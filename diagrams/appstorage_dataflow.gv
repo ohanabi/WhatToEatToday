@@ -1,0 +1,25 @@
+digraph AppStorageDataflow {
+	bgcolor=white fontname="Microsoft YaHei" rankdir=TB
+	node [color="#4C4C4C" fillcolor="#F7F7FB" fontname="Microsoft YaHei" shape=box style="rounded,filled"]
+	edge [arrowsize=0.8 color="#6B6B6B" fontname="Microsoft YaHei"]
+	Index [label="Index
+(入口页面/导航)"]
+	AppStorage [label="AppStorage
+(全局状态/持久化桥接)" color="#2F6FED" fillcolor="#E8F2FF" shape=box style="rounded,filled"]
+	Pages [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8">
+          <TR><TD BGCOLOR="#F7F7FB"><B>各页面（Pages）</B></TD></TR>
+          <TR><TD ALIGN="LEFT">推荐页 TodayRecommendPage</TD></TR>
+          <TR><TD ALIGN="LEFT">菜品页 FoodListPage</TD></TR>
+          <TR><TD ALIGN="LEFT">历史页 HistoryPage</TD></TR>
+          <TR><TD ALIGN="LEFT">统计页 StatsPage</TD></TR>
+          <TR><TD ALIGN="LEFT">设置页 SettingsPage</TD></TR>
+        </TABLE>
+        > shape=plaintext]
+	Index -> AppStorage [label="读/写全局状态
+(初始化/路由触发)"]
+	AppStorage -> Pages [label="状态下发/订阅更新"]
+	Pages -> AppStorage [label="用户操作→回写
+(偏好/历史/菜品)"]
+	Index -> Pages [label="导航" style=dashed]
+}
