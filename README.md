@@ -108,10 +108,3 @@ python draw_recommend_flow.py
 
 
 
-
-
----
-
-## 许可证
-
-如无特别说明：仅用于课程/实验展示目的。
