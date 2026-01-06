@@ -1,0 +1,65 @@
+digraph RecommendFlow {
+	bgcolor=white fontname="Microsoft YaHei" label="食刻选择｜推荐算法流程图（getSuggestion）" labelloc=t rankdir=TB
+	node [color="#4C4C4C" fillcolor="#F7F7FB" fontname="Microsoft YaHei" shape=box style="rounded,filled"]
+	edge [arrowsize=0.8 color="#6B6B6B" fontname="Microsoft YaHei"]
+	Start [label="开始：用户触发推荐
+点击「帮我选！」/自动餐别" fillcolor="#F7F7FB"]
+	InputMeal [label="输入：mealType
+(早餐/午餐/下午茶/晚餐/夜宵)" fillcolor="#F7F7FB"]
+	LoadState [label="读取状态：foods + settings + history
+(AppStorage/Preferences 已加载)" color="#2F6FED" fillcolor="#E8F2FF"]
+	BaseFilter [label="基础过滤（候选集）
+- mealType 匹配
+- enabled=true
+- tags 不命中 bannedTags" fillcolor="#F7F7FB"]
+	HasCandidate1 [label="候选集为空？" color="#4C4C4C" fillcolor="#FFFFFF" shape=diamond]
+	NoCandidate [label="返回 null
+Toast：没有符合条件的菜品" color="#D92F2F" fillcolor="#FFE8E8"]
+	NoRepeat [label="读取设置：noRepeatDays" fillcolor="#F7F7FB"]
+	RecentHistory [label="getRecentHistory(mealType, noRepeatDays)
+过滤：daysDiff < noRepeatDays" fillcolor="#F7F7FB"]
+	DedupFilter [label="近期去重过滤
+从候选集中剔除近期吃过的 foodId" fillcolor="#F7F7FB"]
+	HasCandidate2 [label="去重后为空？" color="#4C4C4C" fillcolor="#FFFFFF" shape=diamond]
+	Fallback [label="回退：使用未去重候选集
+(保证能推荐)" color="#D98C00" fillcolor="#FFF6E8"]
+	FestivalCheck [label="节日判断：getTodayFestival()
+获取 recommendedFoods 集合" fillcolor="#F7F7FB"]
+	AnalyzePref [label="分析偏好：analyzeUserPreference()
+统计 totalLikes / 常见 tags/price/origin" fillcolor="#F7F7FB"]
+	HasLikes [label="totalLikes > 0 ?" color="#4C4C4C" fillcolor="#FFFFFF" shape=diamond]
+	WeightRandom [label="权重策略 A（无喜好数据）
+weight=随机(0.5~1.5)
+若命中节日推荐：×3.0" fillcolor="#F7F7FB"]
+	WeightSimilarity [label="权重策略 B（有喜好数据）
+weight=1.0 + 标签匹配(0.4)
++ 价格匹配(0.2) + 来源匹配(0.2)
++ 随机扰动(0.2)
+若命中节日推荐：×2.5" fillcolor="#F7F7FB"]
+	WeightedPick [label="加权随机抽样
+累计权重命中阈值 → 选出 food" color="#2F6FED" fillcolor="#E8F2FF"]
+	SetCurrent [label="写入 currentSuggestion
+(供「就吃它/喜欢/不再推荐」使用)" color="#2F6FED" fillcolor="#E8F2FF"]
+	Return [label="返回推荐结果
+显示推荐卡片" color="#1E8E3E" fillcolor="#EAF7EA"]
+	Start -> InputMeal
+	InputMeal -> LoadState
+	LoadState -> BaseFilter
+	BaseFilter -> HasCandidate1
+	HasCandidate1 -> NoCandidate [label="是"]
+	HasCandidate1 -> NoRepeat [label="否"]
+	NoRepeat -> RecentHistory
+	RecentHistory -> DedupFilter
+	DedupFilter -> HasCandidate2
+	HasCandidate2 -> Fallback [label="是"]
+	HasCandidate2 -> FestivalCheck [label="否"]
+	Fallback -> FestivalCheck
+	FestivalCheck -> AnalyzePref
+	AnalyzePref -> HasLikes
+	HasLikes -> WeightRandom [label="否"]
+	HasLikes -> WeightSimilarity [label="是"]
+	WeightRandom -> WeightedPick
+	WeightSimilarity -> WeightedPick
+	WeightedPick -> SetCurrent
+	SetCurrent -> Return
+}
